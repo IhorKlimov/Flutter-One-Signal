@@ -59,15 +59,14 @@ class FlutterOneSignalPlugin(private val registrar: Registrar)
     }
 
     private fun parseUnsubscribeWhenNotificationsAreDisabled(call: MethodCall): Boolean {
-        val unsubscribeWhenNotificationsAreDisabled = call.argument<String>("unsubscribeWhenNotificationsAreDisabled")
-        return !(unsubscribeWhenNotificationsAreDisabled == null || unsubscribeWhenNotificationsAreDisabled == "false")
+        return call.argument<String>("unsubscribeWhenNotificationsAreDisabled")
     }
 
     private fun parseInFocusDisplaying(call: MethodCall): OneSignal.OSInFocusDisplayOption {
         val inFocusDisplaying = call.argument<String>("inFocusDisplaying")
-        return if (inFocusDisplaying == null || inFocusDisplaying == "InAppAlert") {
+        return if (inFocusDisplaying == "OSInFocusDisplayOption.InAppAlert") {
             OneSignal.OSInFocusDisplayOption.InAppAlert
-        } else if (inFocusDisplaying == "Notification") {
+        } else if (inFocusDisplaying == "OSInFocusDisplayOption.Notification") {
             OneSignal.OSInFocusDisplayOption.Notification
         } else {
             OneSignal.OSInFocusDisplayOption.None

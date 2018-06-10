@@ -3,6 +3,8 @@ import UIKit
 import OneSignal
 
 public class SwiftFlutterOneSignalPlugin: NSObject, FlutterPlugin, FlutterStreamHandler {
+    private var sink: FlutterEventSink?
+    
     public static func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: "flutter_one_signal/methods", binaryMessenger: registrar.messenger())
         let eventChannel = FlutterEventChannel(name: "flutter_one_signal/events", binaryMessenger: registrar.messenger())
@@ -16,15 +18,21 @@ public class SwiftFlutterOneSignalPlugin: NSObject, FlutterPlugin, FlutterStream
             let onesignalInitSettings = [kOSSettingsKeyAutoPrompt: false]
             let map = call.arguments as? Dictionary<String, String>
             let appId = map?["appId"]
-            print("appId here")
+            print("here")
             print(appId)
+            print(map)
+            let inFocusDisplaying = parseInFocusDisplaying(map: map!)
+            
+            let notificationOpenedBlock: OSHandleNotificationActionBlock = { result in
+                self.sink!("opened:" + result!.notification.stringify())
+            }
             
             OneSignal.initWithLaunchOptions(nil,
                                             appId: appId,
-                                            handleNotificationAction: nil,
+                                            handleNotificationAction: notificationOpenedBlock,
                                             settings: onesignalInitSettings)
             
-            OneSignal.inFocusDisplayType = OSNotificationDisplayType.notification;
+            OneSignal.inFocusDisplayType = inFocusDisplaying
             
             OneSignal.promptForPushNotifications(userResponse: { accepted in
                 print("User accepted notifications: \(accepted)")
@@ -32,7 +40,19 @@ public class SwiftFlutterOneSignalPlugin: NSObject, FlutterPlugin, FlutterStream
         }
     }
     
+    private func parseInFocusDisplaying(map: Dictionary<String, String> ) -> OSNotificationDisplayType{
+        let inFocusDisplaying = map["inFocusDisplaying"]
+        if (inFocusDisplaying == "OSInFocusDisplayOption.InAppAlert.InAppAlert"){
+            return OSNotificationDisplayType.inAppAlert
+        }else if (inFocusDisplaying == "OSInFocusDisplayOption.InAppAlert.Notification"){
+            return OSNotificationDisplayType.notification
+        } else {
+            return OSNotificationDisplayType.none
+        }
+    }
+    
     public func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {
+        sink = events
         return nil
     }
     

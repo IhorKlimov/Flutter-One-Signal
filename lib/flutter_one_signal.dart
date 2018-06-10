@@ -10,14 +10,17 @@ class FlutterOneSignal {
 
   static startInit({
     @required String appId,
-    OSInFocusDisplayOption inFocusDisplaying,
-    bool unsubscribeWhenNotificationsAreDisabled,
+    OSInFocusDisplayOption inFocusDisplaying =
+        OSInFocusDisplayOption.InAppAlert,
+    bool unsubscribeWhenNotificationsAreDisabled = false,
     void notificationReceivedHandler(dynamic notification),
     void notificationOpenedHandler(dynamic notification),
   }) {
-    print('here $appId');
     _channel.invokeMethod("startInit", {
       'appId': appId,
+      'inFocusDisplaying': inFocusDisplaying.toString(),
+      'unsubscribeWhenNotificationsAreDisabled':
+          unsubscribeWhenNotificationsAreDisabled.toString()
     });
 
     eventChannel.receiveBroadcastStream().listen((data) {
