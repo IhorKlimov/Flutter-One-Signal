@@ -40,7 +40,7 @@ public class SwiftFlutterOneSignalPlugin: NSObject, FlutterPlugin, FlutterStream
             OneSignal.promptForPushNotifications(userResponse: { accepted in
                 print("User accepted notifications: \(accepted)")
             })
-        }else if (call.method == "setTag"){
+        }else if (call.method == "sendTag"){
             let map = call.arguments as? Dictionary<String, String>
             let key = map?["key"]
             let value = map?["value"]

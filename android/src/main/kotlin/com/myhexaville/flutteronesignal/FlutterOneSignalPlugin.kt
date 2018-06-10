@@ -27,6 +27,8 @@ class FlutterOneSignalPlugin(private val registrar: Registrar)
     override fun onMethodCall(call: MethodCall, result: Result) {
         if (call.method == "startInit") {
             startInit(call)
+        } else if (call.method == "sendTag") {
+            sendTag(call)
         } else {
             result.notImplemented()
         }
@@ -58,8 +60,15 @@ class FlutterOneSignalPlugin(private val registrar: Registrar)
                 .init()
     }
 
+    private fun sendTag(call: MethodCall) {
+        val key = call.argument<String>("key")
+        val value = call.argument<String>("value")
+
+        OneSignal.sendTag(key, value)
+    }
+
     private fun parseUnsubscribeWhenNotificationsAreDisabled(call: MethodCall): Boolean {
-        return call.argument<String>("unsubscribeWhenNotificationsAreDisabled")
+        return call.argument<String>("unsubscribeWhenNotificationsAreDisabled").toBoolean()
     }
 
     private fun parseInFocusDisplaying(call: MethodCall): OneSignal.OSInFocusDisplayOption {

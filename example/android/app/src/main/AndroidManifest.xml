@@ -16,6 +16,11 @@
         android:name="io.flutter.app.FlutterApplication"
         android:label="flutter_one_signal_example"
         android:icon="@mipmap/ic_launcher">
+
+        <!--todo comment this out if you want to have default notification open behaviour on Android-->
+        <meta-data android:name="com.onesignal.NotificationOpened.DEFAULT" android:value="DISABLE" />
+        <!---->
+
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

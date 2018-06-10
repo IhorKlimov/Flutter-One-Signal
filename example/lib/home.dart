@@ -19,13 +19,13 @@ class _HomeState extends State<Home> {
         // todo Replace with your own, this won't work for you
         notificationOpenedHandler: (notification) {
           print('opened notification: $notification');
-//        Navigator.of(context).pushNamed('pageTwo');
+        Navigator.of(context).pushNamed('pageTwo');
         },
         notificationReceivedHandler: (notification) {
           print('received notification: $notification');
         });
 
-    FlutterOneSignal.setTag('userId', 'demoUserId');
+    FlutterOneSignal.sendTag('userId', 'demoUserId');
   }
 
   @override
