@@ -16,7 +16,7 @@ class FlutterOneSignal {
     void notificationReceivedHandler(dynamic notification),
     void notificationOpenedHandler(dynamic notification),
   }) {
-    _channel.invokeMethod("startInit", {
+    _channel.invokeMethod('startInit', {
       'appId': appId,
       'inFocusDisplaying': inFocusDisplaying.toString(),
       'unsubscribeWhenNotificationsAreDisabled':
@@ -25,13 +25,18 @@ class FlutterOneSignal {
 
     eventChannel.receiveBroadcastStream().listen((data) {
       var input = data as String;
-      if (input.startsWith("opened:")) {
-        notificationOpenedHandler(input.substring(7, input.length));
+      if (input.startsWith(':')) {
+        if (notificationOpenedHandler != null) {
+          notificationOpenedHandler(input.substring(7, input.length));
+        }
       }
     });
   }
 
   static setTag(String key, String value) {
-    _channel.invokeMethod("setTag", {"key": key, "value": value});
+    _channel.invokeMethod('setTag', {
+      'key': key,
+      'value': value,
+    });
   }
 }
