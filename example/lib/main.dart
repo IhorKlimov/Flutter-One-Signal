@@ -1,35 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_one_signal/flutter_one_signal.dart';
+import 'package:flutter_one_signal_example/home.dart';
+import 'package:flutter_one_signal_example/page_two.dart';
 
-void main() => runApp(new MyApp());
+void main() => runApp(MyApp());
 
-class MyApp extends StatefulWidget {
-  @override
-  _MyAppState createState() => new _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  @override
-  void initState() {
-    super.initState();
-    FlutterOneSignal.startInit(
-      appId:
-          '66083bef-bff9-4be6-b45d-c4666bcdd752', // todo Replace with your own, this won't work for you
-      notificationOpenedHandler: (notification) {
-        print(notification);
-      },
-    );
-  }
-
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      home: new Scaffold(
-        appBar: new AppBar(
-          title: new Text('Plugin example app'),
-        ),
-        body: new Center(),
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
       ),
+      home: Home(title: 'Flutter One Signal'),
+      routes: {
+        'pageTwo': (context) => PageTwo(title: 'Page Two'),
+      },
     );
   }
 }

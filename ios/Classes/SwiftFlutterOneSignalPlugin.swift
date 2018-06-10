@@ -18,8 +18,7 @@ public class SwiftFlutterOneSignalPlugin: NSObject, FlutterPlugin, FlutterStream
             let onesignalInitSettings = [kOSSettingsKeyAutoPrompt: false]
             let map = call.arguments as? Dictionary<String, String>
             let appId = map?["appId"]
-            print("here")
-            print(appId)
+            
             print(map)
             let inFocusDisplaying = parseInFocusDisplaying(map: map!)
             
@@ -37,6 +36,12 @@ public class SwiftFlutterOneSignalPlugin: NSObject, FlutterPlugin, FlutterStream
             OneSignal.promptForPushNotifications(userResponse: { accepted in
                 print("User accepted notifications: \(accepted)")
             })
+        }else if (call.method == "setTag"){
+            let map = call.arguments as? Dictionary<String, String>
+            let key = map?["key"]
+            let value = map?["value"]
+            
+            OneSignal.sendTag(key, value: value)
         }
     }
     

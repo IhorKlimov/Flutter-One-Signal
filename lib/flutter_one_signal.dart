@@ -30,4 +30,8 @@ class FlutterOneSignal {
       }
     });
   }
+
+  static setTag(String key, String value) {
+    _channel.invokeMethod("setTag", {"key": key, "value": value});
+  }
 }
