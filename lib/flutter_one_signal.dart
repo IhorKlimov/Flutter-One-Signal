@@ -25,10 +25,12 @@ class FlutterOneSignal {
 
     eventChannel.receiveBroadcastStream().listen((data) {
       var input = data as String;
-      if (input.startsWith(':')) {
-        if (notificationOpenedHandler != null) {
-          notificationOpenedHandler(input.substring(7, input.length));
-        }
+      print(input);
+      if (input.startsWith('opened:') && notificationOpenedHandler != null) {
+        notificationOpenedHandler(input.substring(7, input.length));
+      } else if (input.startsWith('received:') &&
+          notificationReceivedHandler != null) {
+        notificationReceivedHandler(input.substring(9, input.length));
       }
     });
   }

@@ -15,13 +15,15 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     FlutterOneSignal.startInit(
-      appId: '66083bef-bff9-4be6-b45d-c4666bcdd752',
-      // todo Replace with your own, this won't work for you
-      notificationOpenedHandler: (notification) {
-        print(notification);
+        appId: '66083bef-bff9-4be6-b45d-c4666bcdd752',
+        // todo Replace with your own, this won't work for you
+        notificationOpenedHandler: (notification) {
+          print('opened notification: $notification');
 //        Navigator.of(context).pushNamed('pageTwo');
-      },
-    );
+        },
+        notificationReceivedHandler: (notification) {
+          print('received notification: $notification');
+        });
 
     FlutterOneSignal.setTag('userId', 'demoUserId');
   }

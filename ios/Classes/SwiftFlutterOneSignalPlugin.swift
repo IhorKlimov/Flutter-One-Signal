@@ -25,9 +25,13 @@ public class SwiftFlutterOneSignalPlugin: NSObject, FlutterPlugin, FlutterStream
             let notificationOpenedBlock: OSHandleNotificationActionBlock = { result in
                 self.sink!("opened:" + result!.notification.stringify())
             }
+            let notificationReceivedBlock: OSHandleNotificationReceivedBlock = { notification in
+                self.sink!("received:" + notification!.stringify())
+            }
             
             OneSignal.initWithLaunchOptions(nil,
                                             appId: appId,
+                                            handleNotificationReceived: notificationReceivedBlock,
                                             handleNotificationAction: notificationOpenedBlock,
                                             settings: onesignalInitSettings)
             
