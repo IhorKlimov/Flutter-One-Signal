@@ -37,7 +37,7 @@ Open ios directory in Xcode and copy Bundle identifier
 
 Now open FIrebase console, add an iOS app for your project using that Bundle ID and download GoogleService-info.plist from the next step. Click continue for the next steps, just ignore them
 
-Open Xcode and paste GoogleService-info.plist into Runner directory
+Open Xcode and paste GoogleService-info.plist into Runner directory, the one that has AppDelegate file in it
 
 It's important that you paste it using Xcode, if you use just a file explorer there will be some missing setting that I think Xcode does for you and your app won't work
 
@@ -49,7 +49,7 @@ Next open Capabilities tab and turn Push Notifications on
 
 And Background Modes with Remote notifications checkbox
 
-Next, generate a .p12 file for your app using this tool, download it and keep the password
+Next, generate a .p12 file for your app using [this](https://onesignal.com/provisionator) tool, download it and keep the password
 
 Add iOS app is One Signal/Settings and upload .p12 file and the password that you get before
 
