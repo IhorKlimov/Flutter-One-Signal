@@ -1,5 +1,4 @@
-import 'dart:async';
-
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 enum OSInFocusDisplayOption { InAppAlert, Notification, None }
@@ -10,16 +9,17 @@ class FlutterOneSignal {
       EventChannel('flutter_one_signal/events');
 
   static startInit({
+    @required String appId,
     OSInFocusDisplayOption inFocusDisplaying,
     bool unsubscribeWhenNotificationsAreDisabled,
     void notificationReceivedHandler(dynamic notification),
     void notificationOpenedHandler(dynamic notification),
   }) {
+    print('here $appId');
     _channel.invokeMethod("startInit", {
-      'inFocusDisplaying': inFocusDisplaying,
-      'unsubscribeWhenNotificationsAreDisabled':
-          unsubscribeWhenNotificationsAreDisabled
+      'appId': appId,
     });
+
     eventChannel.receiveBroadcastStream().listen((data) {
       var input = data as String;
       if (input.startsWith("opened:")) {

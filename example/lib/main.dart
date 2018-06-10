@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_one_signal/flutter_one_signal.dart';
-import 'dart:convert';
 
 void main() => runApp(new MyApp());
 
@@ -15,10 +13,12 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     FlutterOneSignal.startInit(
-      notificationOpenedHandler: (notification) {
-        print(notification);
-      },
-    );
+        appId:
+            '66083bef-bff9-4be6-b45d-c4666bcdd752' // todo Replace with your own, this won't work for you
+//      notificationOpenedHandler: (notification) {
+//        print(notification);
+//      },
+        );
   }
 
   @override
