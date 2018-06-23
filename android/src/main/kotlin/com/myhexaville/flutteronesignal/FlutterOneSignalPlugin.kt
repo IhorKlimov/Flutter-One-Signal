@@ -25,12 +25,11 @@ class FlutterOneSignalPlugin(private val registrar: Registrar)
     }
 
     override fun onMethodCall(call: MethodCall, result: Result) {
-        if (call.method == "startInit") {
-            startInit(call)
-        } else if (call.method == "sendTag") {
-            sendTag(call)
-        } else {
-            result.notImplemented()
+        when (call.method) {
+            "startInit" -> startInit(call, result)
+            "sendTag" -> sendTag(call)
+            "getUserId" -> getUserId(call, result)
+            else -> result.notImplemented()
         }
     }
 
@@ -41,12 +40,9 @@ class FlutterOneSignalPlugin(private val registrar: Registrar)
     override fun onCancel(p0: Any?) {
     }
 
-    private fun startInit(call: MethodCall) {
+    private fun startInit(call: MethodCall, result: Result) {
         val inFocusDisplaying = parseInFocusDisplaying(call)
         val unsubscribeWhenNotificationsAreDisabled = parseUnsubscribeWhenNotificationsAreDisabled(call)
-
-        println(inFocusDisplaying)
-        println(unsubscribeWhenNotificationsAreDisabled)
 
         OneSignal.startInit(registrar.context())
                 .inFocusDisplaying(inFocusDisplaying)
@@ -58,6 +54,7 @@ class FlutterOneSignalPlugin(private val registrar: Registrar)
                 })
                 .unsubscribeWhenNotificationsAreDisabled(unsubscribeWhenNotificationsAreDisabled)
                 .init()
+        result.success(true)
     }
 
     private fun sendTag(call: MethodCall) {
@@ -65,6 +62,15 @@ class FlutterOneSignalPlugin(private val registrar: Registrar)
         val value = call.argument<String>("value")
 
         OneSignal.sendTag(key, value)
+    }
+
+    private fun getUserId(call: MethodCall, result: Result) {
+        val status = OneSignal.getPermissionSubscriptionState()
+        if (status.permissionStatus.enabled) {
+            result.success(status.subscriptionStatus.userId)
+            return
+        }
+        result.error("DISABLED", "OneSignal permission is disabled", null)
     }
 
     private fun parseUnsubscribeWhenNotificationsAreDisabled(call: MethodCall): Boolean {

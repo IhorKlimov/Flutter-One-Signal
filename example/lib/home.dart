@@ -11,21 +11,13 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  static const String DEFAULT_APP_ID = '66083bef-bff9-4be6-b45d-c4666bcdd752';
+  static const String TEST_APP_ID = '5e92b9ef-1336-4ca8-8357-7c8e3dd92e9c';
+
   @override
   void initState() {
     super.initState();
-    FlutterOneSignal.startInit(
-        appId: '66083bef-bff9-4be6-b45d-c4666bcdd752',
-        // todo Replace with your own, this won't work for you
-        notificationOpenedHandler: (notification) {
-          print('opened notification: $notification');
-        Navigator.of(context).pushNamed('pageTwo');
-        },
-        notificationReceivedHandler: (notification) {
-          print('received notification: $notification');
-        });
-
-    FlutterOneSignal.sendTag('userId', 'demoUserId');
+    _initOneSignal();
   }
 
   @override
@@ -38,5 +30,25 @@ class _HomeState extends State<Home> {
         child: Text('Home page'),
       ),
     );
+  }
+
+  _initOneSignal() async {
+    var notificationsPermissionGranted = await FlutterOneSignal.startInit(
+        appId: TEST_APP_ID,
+        // todo Replace with your own, this won't work for you
+        notificationOpenedHandler: (notification) {
+          print('opened notification: $notification');
+          Navigator.of(context).pushNamed('pageTwo');
+        },
+        notificationReceivedHandler: (notification) {
+          print('received notification: $notification');
+        });
+    print(
+        'Push notification permission granted $notificationsPermissionGranted');
+
+    FlutterOneSignal.sendTag('userId', 'demoUserId');
+
+    var userId = await FlutterOneSignal.getUserId();
+    print("Received $userId");
   }
 }

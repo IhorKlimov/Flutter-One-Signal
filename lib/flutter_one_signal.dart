@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
@@ -8,15 +10,23 @@ class FlutterOneSignal {
   static final EventChannel eventChannel =
       EventChannel('flutter_one_signal/events');
 
-  static startInit({
+  /*
+  * You need to wait till this method is completed,
+  * to use other methods of the API successfully
+  * Returns a Future of bool for notification permission granted value
+  * Returns a Future of true instantaneously on Android
+  * And a Future of the result of a notification permission popup on iOS
+  * */
+  static Future<bool> startInit({
     @required String appId,
     OSInFocusDisplayOption inFocusDisplaying =
         OSInFocusDisplayOption.InAppAlert,
     bool unsubscribeWhenNotificationsAreDisabled = false,
     void notificationReceivedHandler(dynamic notification),
     void notificationOpenedHandler(dynamic notification),
-  }) {
-    _channel.invokeMethod('startInit', {
+  }) async {
+    var notificationPermissionGranted =
+        await _channel.invokeMethod('startInit', {
       'appId': appId,
       'inFocusDisplaying': inFocusDisplaying.toString(),
       'unsubscribeWhenNotificationsAreDisabled':
@@ -33,6 +43,8 @@ class FlutterOneSignal {
         notificationReceivedHandler(input.substring(9, input.length));
       }
     });
+
+    return notificationPermissionGranted;
   }
 
   static sendTag(String key, String value) {
@@ -40,5 +52,9 @@ class FlutterOneSignal {
       'key': key,
       'value': value,
     });
+  }
+
+  static Future<String> getUserId() async {
+    return await _channel.invokeMethod('getUserId');
   }
 }
