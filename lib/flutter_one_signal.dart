@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
@@ -40,5 +42,9 @@ class FlutterOneSignal {
       'key': key,
       'value': value,
     });
+  }
+
+  static Future<String> getUserId() async {
+    return await _channel.invokeMethod('getUserId');
   }
 }

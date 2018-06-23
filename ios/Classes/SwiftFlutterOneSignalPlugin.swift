@@ -14,17 +14,20 @@ public class SwiftFlutterOneSignalPlugin: NSObject, FlutterPlugin, FlutterStream
     }
     
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-        if (call.method == "startInit"){
+        if (call.method == "startInit") {
+
             let onesignalInitSettings = [kOSSettingsKeyAutoPrompt: false]
             let map = call.arguments as? Dictionary<String, String>
             let appId = map?["appId"]
             
             print(map)
+
             let inFocusDisplaying = parseInFocusDisplaying(map: map!)
             
             let notificationOpenedBlock: OSHandleNotificationActionBlock = { result in
                 self.sink!("opened:" + result!.notification.stringify())
             }
+
             let notificationReceivedBlock: OSHandleNotificationReceivedBlock = { notification in
                 self.sink!("received:" + notification!.stringify())
             }
@@ -40,12 +43,36 @@ public class SwiftFlutterOneSignalPlugin: NSObject, FlutterPlugin, FlutterStream
             OneSignal.promptForPushNotifications(userResponse: { accepted in
                 print("User accepted notifications: \(accepted)")
             })
-        }else if (call.method == "sendTag"){
+
+        } else if (call.method == "sendTag") {
             let map = call.arguments as? Dictionary<String, String>
             let key = map?["key"]
             let value = map?["value"]
             
             OneSignal.sendTag(key, value: value)
+        } else if (call.method == "getUserId") {
+            // https://documentation.onesignal.com/docs/ios-native-sdk#section--getpermissionsubscriptionstate-
+            let status: OSPermissionSubscriptionState = OneSignal.getPermissionSubscriptionState()
+            
+            let hasPrompted = status.permissionStatus.hasPrompted
+            print("hasPrompted = \(hasPrompted)")
+            let userStatus = status.permissionStatus.status
+            print("userStatus = \(userStatus)")
+            let isSubscribed = status.subscriptionStatus.subscribed
+            print("isSubscribed = \(isSubscribed)")
+            let userSubscriptionSetting = status.subscriptionStatus.userSubscriptionSetting
+            print("userSubscriptionSetting = \(userSubscriptionSetting)")
+            let userID = status.subscriptionStatus.userId
+            print("userID = \(userID)")
+
+            if (isSubscribed) {
+                result(userID)
+            } else {
+                result(FlutterError.init(code: "DISABLED",
+                             message: "OneSignal subscription is disabled",
+                             details: nil));
+            }
+            
         }
     }
     
