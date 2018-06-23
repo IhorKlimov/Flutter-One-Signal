@@ -26,7 +26,7 @@ class FlutterOneSignalPlugin(private val registrar: Registrar)
 
     override fun onMethodCall(call: MethodCall, result: Result) {
         when (call.method) {
-            "startInit" -> startInit(call)
+            "startInit" -> startInit(call, result)
             "sendTag" -> sendTag(call)
             "getUserId" -> getUserId(call, result)
             else -> result.notImplemented()
@@ -40,13 +40,9 @@ class FlutterOneSignalPlugin(private val registrar: Registrar)
     override fun onCancel(p0: Any?) {
     }
 
-    private fun startInit(call: MethodCall) {
+    private fun startInit(call: MethodCall, result: Result) {
         val inFocusDisplaying = parseInFocusDisplaying(call)
         val unsubscribeWhenNotificationsAreDisabled = parseUnsubscribeWhenNotificationsAreDisabled(call)
-
-        println(inFocusDisplaying)
-        println(unsubscribeWhenNotificationsAreDisabled)
-
 
         OneSignal.startInit(registrar.context())
                 .inFocusDisplaying(inFocusDisplaying)
@@ -58,6 +54,7 @@ class FlutterOneSignalPlugin(private val registrar: Registrar)
                 })
                 .unsubscribeWhenNotificationsAreDisabled(unsubscribeWhenNotificationsAreDisabled)
                 .init()
+        result.success(true)
     }
 
     private fun sendTag(call: MethodCall) {
