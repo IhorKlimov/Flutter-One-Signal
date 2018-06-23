@@ -1,10 +1,11 @@
 Flutter OneSignal
 
 ### Current Features
-There’re three features currently available
+Current features available:
 
 * Sign up for push notifications
 * Send a client tag
+* Get user id
 * Handle notification receive/open events with notification as an input
 ### Android Setup
 Just follow these steps, and ignore all the native instructions from both Firebase and One Signal, a big chunk of that boilerplate code is handled by this plugin
@@ -65,19 +66,24 @@ dependencies:
 And this code anywhere where you want to initialize One Signal push notifications in your app
 
 ```dart
-FlutterOneSignal.startInit(                                                      
-  appId: 'ONE_SIGNAL_APP_ID',                                 
-  inFocusDisplaying: OSInFocusDisplayOption.InAppAlert,                          
-  notificationReceivedHandler: (notification) {                                  
-    print('received : $notification');
-  },                                                                             
-  notificationOpenedHandler: (notification) {                                    
-    print('opened : $notification');                                             
-  },                                                                             
-  unsubscribeWhenNotificationsAreDisabled: false,                                
-);        
-                                                                       
-FlutterOneSignal.sendTag('key', 'defaultUserId');
+var notificationsPermissionGranted = await FlutterOneSignal.startInit(
+     appId: 'ONE_SIGNAL_APP_ID',
+     inFocusDisplaying: OSInFocusDisplayOption.InAppAlert,
+     notificationReceivedHandler: (notification) {
+       print('received : $notification');
+     },
+     notificationOpenedHandler: (notification) {
+       print('opened : $notification');
+     },
+     unsubscribeWhenNotificationsAreDisabled: false,
+     );
+
+print('Push notification permission granted $notificationsPermissionGranted');
+
+FlutterOneSignal.sendTag('userId', 'demoUserId');
+
+var userId = await FlutterOneSignal.getUserId();
+print("Received $userId");
 ```
 
 This code covers three features: startInit method signs you up for notifications and you pass notificationReceivedHandler, notificationOpenedHandler just like in the native SDK's and sending a tag
