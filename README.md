@@ -1,4 +1,6 @@
-flutter_one_signal
+## flutter_one_signal
+[![pub package](https://img.shields.io/badge/pub-v.0.1.1-orange.svg)](https://pub.dartlang.org/packages/flutter_one_signal)
+
 
 ### Current Features
 Current features available:
