@@ -53,7 +53,7 @@ public class SwiftFlutterOneSignalPlugin: NSObject, FlutterPlugin, FlutterStream
             let map = call.arguments as? Dictionary<String, String>
             let email = map?["email"]
 
-            OneSignal.setEmail(email)
+            OneSignal.setEmail(email!)
         } else if (call.method == "getUserId") {
             // https://documentation.onesignal.com/docs/ios-native-sdk#section--getpermissionsubscriptionstate-
             let status: OSPermissionSubscriptionState = OneSignal.getPermissionSubscriptionState()

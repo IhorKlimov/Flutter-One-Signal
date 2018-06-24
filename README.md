@@ -1,6 +1,4 @@
-Flutter OneSignal
-
-[![pub package](https://img.shields.io/badge/pub-v0.1.0-orange.svg)](https://pub.dartlang.org/packages/flutter_one_signal)
+flutter_one_signal
 
 ### Current Features
 Current features available:
@@ -78,6 +76,8 @@ var notificationsPermissionGranted = await FlutterOneSignal.startInit(
 print('Push notification permission granted $notificationsPermissionGranted');
 
 FlutterOneSignal.sendTag('userId', 'demoUserId');
+
+FlutterOneSignal.setEmail('email');
 
 var userId = await FlutterOneSignal.getUserId();
 print("Received $userId");
