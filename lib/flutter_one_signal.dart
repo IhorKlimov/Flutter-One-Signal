@@ -10,11 +10,11 @@ class FlutterOneSignal {
   static final EventChannel eventChannel =
       EventChannel('flutter_one_signal/events');
 
-  // You need to wait till this method is completed,
-  // to use other methods of the API successfully
-  // Returns a Future of bool for notification permission granted value
-  // Returns a Future of true instantaneously on Android
-  // And a Future of the result of a notification permission popup on iOS
+  /// You need to wait till this method is completed,
+  /// to use other methods of the API successfully
+  /// Returns a Future of bool for notification permission granted value
+  /// Returns a Future of true instantaneously on Android
+  /// And a Future of the result of a notification permission popup on iOS
   static Future<bool> startInit({
     @required String appId,
     OSInFocusDisplayOption inFocusDisplaying =
@@ -45,7 +45,7 @@ class FlutterOneSignal {
     return notificationPermissionGranted;
   }
 
-  // Read more here https://documentation.onesignal.com/docs/data-tags
+  /// Read more here https://documentation.onesignal.com/docs/data-tags
   static sendTag(String key, String value) {
     _channel.invokeMethod('sendTag', {
       'key': key,
@@ -53,7 +53,7 @@ class FlutterOneSignal {
     });
   }
 
-  // Read more https://documentation.onesignal.com/docs/player-id
+  /// Read more https://documentation.onesignal.com/docs/player-id
   static Future<String> getUserId() async {
     return await _channel.invokeMethod('getUserId');
   }
