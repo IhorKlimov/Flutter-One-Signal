@@ -1,4 +1,4 @@
-Flutter OneSignal
+flutter_one_signal
 
 ### Current Features
 Current features available:
@@ -86,11 +86,13 @@ var userId = await FlutterOneSignal.getUserId();
 print("Received $userId");
 ```
 
-This code covers three features: startInit method signs you up for notifications and you pass notificationReceivedHandler, notificationOpenedHandler just like in the native SDK's and sending a tag
+startInit method signs you up for notifications and you pass notificationReceivedHandler, notificationOpenedHandler just like in the native SDK's
 
 The only required attribute here is appId. inFocusDisplaying by default is InAppAlert, unsubscribeWhenNotificationsAreDisabled works only on Android, it's false by default
 
 You could've noticed that I have a duplicated way of declaring One Signal app id. This is due to a very different iOS/Android setup logic. So, for now, you have to include it in build.gradle file. In the next iterations, I'll try to  get rid of this part
+
+On Android startInit returns Future of true instantaneously and Future of the result of a notification permission popup on iOS. You need to wait for this method to complete before calling other API methods
 
 ### Notification Open Handler
 By default you have your home page opened when notification is clicked. This is not a behavior you'd want for a real app. To disable this behavior on Android add this code to android/app/src/main/AndroidManifest.xml
