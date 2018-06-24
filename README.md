@@ -1,4 +1,6 @@
-flutter_one_signal
+Flutter OneSignal
+
+[![pub package](https://img.shields.io/badge/pub-v0.1.0-orange.svg)](https://pub.dartlang.org/packages/flutter_one_signal)
 
 ### Current Features
 Current features available:
@@ -55,13 +57,7 @@ Next, generate a .p12 file for your app using [this](https://onesignal.com/prov
 Add iOS app is One Signal/Settings and upload .p12 file and the password that you get before
 
 ### Flutter Part
-Add this dependency to pubspec.yaml
-
-```yaml
-dependencies:
-  flutter_one_signal:
-    git: 'https://github.com/IhorKlimov/Flutter-One-Signal.git'
-```
+To use this plugin, add `flutter_one_signal` as a [dependency in your pubspec.yaml file](https://flutter.io/platform-plugins/).
 
 And this code anywhere where you want to initialize One Signal push notifications in your app
 
@@ -92,7 +88,7 @@ The only required attribute here is appId. inFocusDisplaying by default is InA
 
 You could've noticed that I have a duplicated way of declaring One Signal app id. This is due to a very different iOS/Android setup logic. So, for now, you have to include it in build.gradle file. In the next iterations, I'll try to  get rid of this part
 
-On Android startInit returns Future of true instantaneously and Future of the result of a notification permission popup on iOS. You need to wait for this method to complete before calling other API methods
+On Android startInit returns Future of true instantaneously
 
 ### Notification Open Handler
 By default you have your home page opened when notification is clicked. This is not a behavior you'd want for a real app. To disable this behavior on Android add this code to android/app/src/main/AndroidManifest.xml
