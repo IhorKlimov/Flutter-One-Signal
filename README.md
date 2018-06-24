@@ -6,7 +6,8 @@ Flutter OneSignal
 Current features available:
 
 * Sign up for push notifications
-* Send a client tag
+* Send a user tag
+* Set email
 * Get user id
 * Handle notification receive/open events with notification as an input
 ### Android Setup

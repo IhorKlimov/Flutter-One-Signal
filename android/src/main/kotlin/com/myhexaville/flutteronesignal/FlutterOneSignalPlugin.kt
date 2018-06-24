@@ -28,6 +28,7 @@ class FlutterOneSignalPlugin(private val registrar: Registrar)
         when (call.method) {
             "startInit" -> startInit(call, result)
             "sendTag" -> sendTag(call)
+            "setEmail" -> setEmail(call)
             "getUserId" -> getUserId(call, result)
             else -> result.notImplemented()
         }
@@ -62,6 +63,11 @@ class FlutterOneSignalPlugin(private val registrar: Registrar)
         val value = call.argument<String>("value")
 
         OneSignal.sendTag(key, value)
+    }
+
+    private fun setEmail(email: String) {
+        val email = call.argument<String>("email")
+        OneSignal.setEmail(email)
     }
 
     private fun getUserId(call: MethodCall, result: Result) {

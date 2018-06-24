@@ -53,6 +53,12 @@ class FlutterOneSignal {
     });
   }
 
+  static setEmail(String email) {
+    _channel.invokeMethod('setEmail', {
+      'email': email,
+    });
+  }
+
   /// Read more https://documentation.onesignal.com/docs/player-id
   static Future<String> getUserId() async {
     return await _channel.invokeMethod('getUserId');

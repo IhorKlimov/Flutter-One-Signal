@@ -66,6 +66,8 @@ class _HomeState extends State<Home> {
 
     FlutterOneSignal.sendTag('userId', 'demoUserId');
 
+    FlutterOneSignal.setEmail('name@email.com');
+
     var userId = await FlutterOneSignal.getUserId();
     print("Received $userId");
   }
