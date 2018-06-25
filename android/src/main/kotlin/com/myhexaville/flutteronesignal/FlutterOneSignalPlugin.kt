@@ -65,7 +65,7 @@ class FlutterOneSignalPlugin(private val registrar: Registrar)
         OneSignal.sendTag(key, value)
     }
 
-    private fun setEmail(email: String) {
+    private fun setEmail(call: MethodCall) {
         val email = call.argument<String>("email")
         OneSignal.setEmail(email)
     }
