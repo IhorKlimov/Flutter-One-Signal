@@ -50,6 +50,14 @@ class _HomeState extends State<Home> {
           Align(
             alignment: Alignment.center,
             child: RaisedButton(
+              onPressed: _unsubscribe,
+              child: Text('Unsubscrbe'),
+            ),
+          ),
+          SizedBox(height: 16.0),
+          Align(
+            alignment: Alignment.center,
+            child: RaisedButton(
               onPressed: _logoutEmail,
               child: Text('Logout email'),
             ),
@@ -75,14 +83,18 @@ class _HomeState extends State<Home> {
 
     FlutterOneSignal.sendTag('userId', 'demoUserId');
 
-    FlutterOneSignal.setEmail('name@email.com');
+//    FlutterOneSignal.setEmail('name@email.com');
 
     var userId = await FlutterOneSignal.getUserId();
-    print("Received $userId");
+    print("User id : $userId");
   }
 
   _logoutEmail() {
     FlutterOneSignal.logoutEmail();
+  }
+
+  _unsubscribe() {
+    FlutterOneSignal.setSubscription(false);
   }
 }
 

@@ -69,4 +69,8 @@ class FlutterOneSignal {
   static Future<String> getUserId() async {
     return await _channel.invokeMethod('getUserId');
   }
+
+  static setSubscription(bool enable) {
+    _channel.invokeMethod('setSubscription', {'enable': enable});
+  }
 }

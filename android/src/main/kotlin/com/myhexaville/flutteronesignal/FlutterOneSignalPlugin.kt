@@ -30,6 +30,7 @@ class FlutterOneSignalPlugin(private val registrar: Registrar)
             "sendTag" -> sendTag(call)
             "setEmail" -> setEmail(call)
             "logoutEmail" -> logoutEmail(call)
+            "setSubscription" -> setSubscription(call)
             "getUserId" -> getUserId(call, result)
             else -> result.notImplemented()
         }
@@ -40,6 +41,12 @@ class FlutterOneSignalPlugin(private val registrar: Registrar)
     }
 
     override fun onCancel(p0: Any?) {
+    }
+
+    private fun setSubscription(call: MethodCall){
+        val enable = call.argument<Boolean>("enable")
+
+        OneSignal.setSubscription(enable)
     }
 
     private fun startInit(call: MethodCall, result: Result) {

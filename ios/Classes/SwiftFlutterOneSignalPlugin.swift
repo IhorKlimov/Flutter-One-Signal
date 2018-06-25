@@ -56,6 +56,10 @@ public class SwiftFlutterOneSignalPlugin: NSObject, FlutterPlugin, FlutterStream
             OneSignal.setEmail(email!)
         } else if (call.method == "logoutEmail") {
           OneSignal.logoutEmail();
+        } else if (call.method == "setSubscription") {
+            let map = call.arguments as? Dictionary<String, Any>
+            let enable: Bool = (map?["enable"] as? Bool)!
+            OneSignal.setSubscription(enable)
         } else if (call.method == "getUserId") {
             // https://documentation.onesignal.com/docs/ios-native-sdk#section--getpermissionsubscriptionstate-
             let status: OSPermissionSubscriptionState = OneSignal.getPermissionSubscriptionState()
