@@ -29,7 +29,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  static const String DEFAULT_APP_ID = '66083bef-bff9-4be6-b45d-c4666bcdd752';
+  static const String DEFAULT_APP_ID = '50c236d4-8355-451d-a140-3adf38b04c43';
   static const String TEST_APP_ID = '5e92b9ef-1336-4ca8-8357-7c8e3dd92e9c';
 
   @override
@@ -44,15 +44,24 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Text('Home page'),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Align(
+            alignment: Alignment.center,
+            child: RaisedButton(
+              onPressed: _logoutEmail,
+              child: Text('Logout email'),
+            ),
+          )
+        ],
       ),
     );
   }
 
   _initOneSignal() async {
     var notificationsPermissionGranted = await FlutterOneSignal.startInit(
-        appId: TEST_APP_ID,
+        appId: DEFAULT_APP_ID,
         // todo Replace with your own, this won't work for you
         notificationOpenedHandler: (notification) {
           print('opened notification: $notification');
@@ -70,6 +79,10 @@ class _HomeState extends State<Home> {
 
     var userId = await FlutterOneSignal.getUserId();
     print("Received $userId");
+  }
+
+  _logoutEmail() {
+    FlutterOneSignal.logoutEmail();
   }
 }
 

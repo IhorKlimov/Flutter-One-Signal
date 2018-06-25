@@ -53,10 +53,16 @@ class FlutterOneSignal {
     });
   }
 
+  /// Read more https://documentation.onesignal.com/docs/email-quickstart
   static setEmail(String email) {
     _channel.invokeMethod('setEmail', {
       'email': email,
     });
+  }
+
+  /// Read more https://documentation.onesignal.com/docs/email-quickstart
+  static logoutEmail() {
+    _channel.invokeMethod('logoutEmail');
   }
 
   /// Read more https://documentation.onesignal.com/docs/player-id

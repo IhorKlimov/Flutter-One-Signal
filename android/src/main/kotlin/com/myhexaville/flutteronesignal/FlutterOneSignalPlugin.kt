@@ -29,6 +29,7 @@ class FlutterOneSignalPlugin(private val registrar: Registrar)
             "startInit" -> startInit(call, result)
             "sendTag" -> sendTag(call)
             "setEmail" -> setEmail(call)
+            "logoutEmail" -> logoutEmail(call)
             "getUserId" -> getUserId(call, result)
             else -> result.notImplemented()
         }
@@ -68,6 +69,10 @@ class FlutterOneSignalPlugin(private val registrar: Registrar)
     private fun setEmail(call: MethodCall) {
         val email = call.argument<String>("email")
         OneSignal.setEmail(email)
+    }
+
+    private fun logoutEmail(call: MethodCall) {
+        OneSignal.logoutEmail()
     }
 
     private fun getUserId(call: MethodCall, result: Result) {
