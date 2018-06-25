@@ -1,3 +1,7 @@
+## 0.1.2
+
+* Set email Android fix
+
 ## 0.1.1
 
 * Set email
