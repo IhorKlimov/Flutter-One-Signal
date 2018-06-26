@@ -1,5 +1,5 @@
 ## flutter_one_signal
-[![pub package](https://img.shields.io/badge/pub-v.0.1.2-orange.svg)](https://pub.dartlang.org/packages/flutter_one_signal)
+[![pub package](https://img.shields.io/badge/pub-v.0.2.0-orange.svg)](https://pub.dartlang.org/packages/flutter_one_signal)
 
 
 ### Current Features
@@ -8,7 +8,9 @@ Current features available:
 * Sign up for push notifications
 * Send a user tag
 * Set email
+* Logout email
 * Get user id
+* Set subscription
 * Handle notification receive/open events with notification as an input
 ### Android Setup
 Just follow these steps, and ignore all the native instructions from both Firebase and One Signal, a big chunk of that boilerplate code is handled by this plugin
@@ -80,6 +82,10 @@ print('Push notification permission granted $notificationsPermissionGranted');
 FlutterOneSignal.sendTag('userId', 'demoUserId');
 
 FlutterOneSignal.setEmail('email');
+
+FlutterOneSignal.logoutEmail();
+
+FlutterOneSignal.setSubscription(false);
 
 var userId = await FlutterOneSignal.getUserId();
 print("Received $userId");
