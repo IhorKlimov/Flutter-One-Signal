@@ -120,3 +120,9 @@ FlutterOneSignal.startInit(
 );
 ```
 I haven't figured out an iOS fix to disable the default open behavior. You can still use the Flutter logic, it's just that your initial page will appear before the intended one
+
+### TODO
+
+- [ ] Privacy section
+- [ ] Post notification
+
