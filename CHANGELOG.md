@@ -1,3 +1,7 @@
+## 0.2.0
+
+* Logout email, setSubscription
+
 ## 0.1.2
 
 * Set email Android fix
