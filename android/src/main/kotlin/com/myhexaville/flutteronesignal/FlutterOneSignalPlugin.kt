@@ -1,6 +1,6 @@
 package com.myhexaville.flutteronesignal
 
-import com.onesignal.OneSignal
+import com.onesignal.*
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
@@ -9,8 +9,9 @@ import io.flutter.plugin.common.PluginRegistry.Registrar
 import io.flutter.plugin.common.EventChannel
 
 class FlutterOneSignalPlugin(private val registrar: Registrar)
-    : MethodCallHandler, EventChannel.StreamHandler {
+    : MethodCallHandler, EventChannel.StreamHandler, OSSubscriptionObserver {
     private var sink: EventChannel.EventSink? = null
+    private var result: Result? = null
 
     companion object {
         @JvmStatic
@@ -43,7 +44,7 @@ class FlutterOneSignalPlugin(private val registrar: Registrar)
     override fun onCancel(p0: Any?) {
     }
 
-    private fun setSubscription(call: MethodCall){
+    private fun setSubscription(call: MethodCall) {
         val enable = call.argument<Boolean>("enable")
 
         OneSignal.setSubscription(enable)
@@ -84,11 +85,13 @@ class FlutterOneSignalPlugin(private val registrar: Registrar)
 
     private fun getUserId(call: MethodCall, result: Result) {
         val status = OneSignal.getPermissionSubscriptionState()
-        if (status.permissionStatus.enabled) {
+        val userId = status.subscriptionStatus.userId
+        if (userId == null) {
+            this.result = result
+            OneSignal.addSubscriptionObserver(this)
+        } else {
             result.success(status.subscriptionStatus.userId)
-            return
         }
-        result.error("DISABLED", "OneSignal permission is disabled", null)
     }
 
     private fun parseUnsubscribeWhenNotificationsAreDisabled(call: MethodCall): Boolean {
@@ -97,12 +100,17 @@ class FlutterOneSignalPlugin(private val registrar: Registrar)
 
     private fun parseInFocusDisplaying(call: MethodCall): OneSignal.OSInFocusDisplayOption {
         val inFocusDisplaying = call.argument<String>("inFocusDisplaying")
-        return if (inFocusDisplaying == "OSInFocusDisplayOption.InAppAlert") {
-            OneSignal.OSInFocusDisplayOption.InAppAlert
-        } else if (inFocusDisplaying == "OSInFocusDisplayOption.Notification") {
-            OneSignal.OSInFocusDisplayOption.Notification
-        } else {
-            OneSignal.OSInFocusDisplayOption.None
+        return when (inFocusDisplaying) {
+            "OSInFocusDisplayOption.InAppAlert" -> OneSignal.OSInFocusDisplayOption.InAppAlert
+            "OSInFocusDisplayOption.Notification" -> OneSignal.OSInFocusDisplayOption.Notification
+            else -> OneSignal.OSInFocusDisplayOption.None
+        }
+    }
+
+    override fun onOSSubscriptionChanged(stateChanges: OSSubscriptionStateChanges?) {
+        if (stateChanges?.to?.userId != null) {
+            result?.success(stateChanges.to?.userId)
+            OneSignal.removeSubscriptionObserver(this)
         }
     }
 }

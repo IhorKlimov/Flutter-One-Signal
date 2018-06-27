@@ -10,8 +10,6 @@ class FlutterOneSignal {
   static final EventChannel eventChannel =
       EventChannel('flutter_one_signal/events');
 
-  /// You need to wait till this method is completed,
-  /// to use other methods of the API successfully
   /// Returns a Future of bool for notification permission granted value
   /// Returns a Future of true instantaneously on Android
   /// And a Future of the result of a notification permission popup on iOS
