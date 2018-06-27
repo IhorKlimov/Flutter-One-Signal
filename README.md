@@ -1,5 +1,5 @@
 ## flutter_one_signal
-[![pub package](https://img.shields.io/badge/pub-v.0.2.0-orange.svg)](https://pub.dartlang.org/packages/flutter_one_signal)
+[![pub package](https://img.shields.io/badge/pub-v.0.2.1-orange.svg)](https://pub.dartlang.org/packages/flutter_one_signal)
 
 
 ### Current Features

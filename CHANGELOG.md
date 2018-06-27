@@ -1,3 +1,7 @@
+## 0.2.1
+
+* getUserId returns null on initial call fix
+
 ## 0.2.0
 
 * Logout email, setSubscription
