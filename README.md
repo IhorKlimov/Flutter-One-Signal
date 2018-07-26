@@ -2,6 +2,9 @@
 [![pub package](https://img.shields.io/badge/pub-v.0.2.1-orange.svg)](https://pub.dartlang.org/packages/flutter_one_signal)
 
 
+### Update
+There's an official plugin available now [here](https://github.com/OneSignal/OneSignal-Flutter-SDK)
+
 ### Current Features
 Current features available:
 
